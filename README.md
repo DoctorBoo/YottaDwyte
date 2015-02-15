@@ -25,7 +25,7 @@ This project uses graphs & tableviews to present relations between objects. Data
     [parent={"schema":"Schema_FK_table", "object": "FK_table"}&child={"schema":"Schema_PK_table", "object": "PK_table"}](http://haxe.azurewebsites.net/graph?dependencies&pagesize=10&parent={%22schema%22:%22Schema_FK_table%22,%20%22object%22:%20%22FK_table%22}&child={%22schema%22:%22Schema_PK_table%22,%20%22object%22:%20%22PK_table%22}&show)  
 
 ## Known issues
-1. Coordinates and edges are randomly chosen for demo
+1. Coordinates and edges are randomly chosen for the demo.
 2. Firefox 35.0.1 may have other UX than Chrome 40.0.2214.111 when re-submit with updated pagesize value.
 
 
