@@ -671,6 +671,7 @@
     <Content Include="public\stylesheets\style.css" />
     <Content Include="public\stylesheets\style.styl" />
     <Content Include="README.md" />
+    <Content Include="views\directed.jade" />
     <Content Include="views\graph.jade" />
     <Content Include="views\index.jade" />
     <Content Include="views\layout.jade" />

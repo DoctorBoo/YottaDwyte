@@ -1,0 +1,18 @@
+﻿extends graph
+
+block content
+  div(id='header1')
+    div(id='glyphiconified')       
+      h1(id='graph')=h1
+      span(class='glyphicon glyphicon-refresh' aria-hidden='true')
+      span(class='glyphicon-class')   
+    
+  ul(id='menu')
+    li(id='details') Show details
+    li(id='neighbours') Show neighbours     
+
+  div(id='dialogs')
+
+  - var mygraph = graph
+  div(id='container', data-graph=mygraph)
+      div(id='graph-container')

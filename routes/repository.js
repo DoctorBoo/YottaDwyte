@@ -28,7 +28,7 @@ var graphRenderer = function (request, response, meta, rows) {
 
   if (query.show === '') {
     var factory = router.CreateGraph(request, meta, rows);
-    response.render('graph', {
+    response.render('directed', {
       title: 'Graph',
       h1: 'Graph',
       graph: factory.graph
