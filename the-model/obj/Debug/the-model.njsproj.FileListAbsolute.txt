@@ -1,0 +1,3 @@
+C:\_WS\MyWebCRM\ScrapYard\CalculusXRest\the-model\bin\Microsoft.NodejsTools.WebRole.dll
+C:\Users\BMW\Documents\GitHub\Calc\the-model\bin\Microsoft.NodejsTools.WebRole.dll
+C:\Users\BMW\Documents\GitHub\YottaDwyte\the-model\bin\Microsoft.NodejsTools.WebRole.dll

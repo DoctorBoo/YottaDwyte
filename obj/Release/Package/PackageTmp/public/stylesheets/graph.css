@@ -1,0 +1,101 @@
+﻿body {
+  background: azure;
+}
+
+#graph-container {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+
+#header1, #homepage, article > p {
+  text-align: center;
+}
+
+#header1 .glyphicon-refresh {
+  position: relative;
+  top: -47px;
+  left: 59px;
+  z-index: 3001;
+}
+
+#glyphiconified .glyphicon-refresh:hover {
+  color: #fff;
+  background-color: #070707;
+  z-index: 3001;
+}
+
+#tableview, #dialogs, .node, .nodeclicked, .dialog {
+  top: 0;
+  left: 0;
+  height: 160px;
+  width: 720px;
+  background: #ECECEC;
+  border-radius: 15px;
+  box-shadow: 10px 10px 5px #888888;
+  position: relative;
+  visibility: hidden;
+  z-index: 3000;
+}
+
+  .dialog > .glyphicon-remove-circle {
+    position: relative;
+    top: -180px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    left: 715px;
+  }
+
+header {
+  width: 100%;
+  position: relative;
+  background: darkgoldenrod;
+}
+
+ul {
+  visibility: hidden;
+}
+
+nav {
+  width: 15%;
+  height: 563px;
+  top: -17px;
+  position: relative;
+  left: 10px;
+  float: left;
+  background: cornsilk;
+}
+
+article {
+  width: 70%;
+  position: relative;
+  left: 10px;
+  float: left;
+  background: azure;
+}
+
+aside {
+  height: 400px;
+  width: 15%;
+  position: relative;
+  left: 10px;
+  float: right;
+  background: darkgrey;
+}
+
+footer {
+  height: 200px;
+  width: 100%;
+  position: relative;
+  top: -10px;
+  left: 10px;
+  clear: left;
+  background: darkgoldenrod;
+}

@@ -1,0 +1,28 @@
+﻿  doctype html
+  html
+  head
+  title=title
+  script(src='/javascripts/jquery-1.10.2.min.js')
+  script(src='/javascripts/bootstrap.min.js')
+  script(src='/javascripts/mycontroller.js')
+  link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')   
+  body
+  h1=h1
+  - var headers = meta
+  - var rows  = values
+  //
+  table.table.table-hover.table-bordered
+		thead
+			tr
+			  each header in headers
+				  th  
+            span= header.name
+		tbody
+    if rows.length
+      each row in rows
+        tr
+          each col in row
+            td
+              span= col
+		else
+      h3='No values found.'
