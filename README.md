@@ -12,7 +12,7 @@ This project uses graphs & tableviews to present relations between objects. Data
 
 ##Examples
 1. [A directed graph with 10 nodes](http://haxe.azurewebsites.net/graph?dependencies&show&pagesize=10)  
-	> Click a node to invoke a menu.  
+	>Click a node to invoke a menu.  
     Change the query-string's pagesize value to increase the amount of nodes.
 2. [Dependencies of AdventureWorks 2012](http://haxe.azurewebsites.net/graph/query?dependencies&pagesize=100&tablify)  
 3. [Jsonfied database object: Production.Product](http://haxe.azurewebsites.net/graph/query?table=production.product&pagesize=10)
