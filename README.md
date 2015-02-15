@@ -27,6 +27,7 @@ This project uses graphs & tableviews to present relations between objects. Data
 ## Known issues
 1. Coordinates and edges are randomly chosen for the demo.
 2. Firefox 35.0.1 may have other UX than Chrome 40.0.2214.111 when re-submit with updated pagesize value.
+3. Displaying empty content while waiting for response. Some tables should be reindexed.
 
 
 
