@@ -11,7 +11,7 @@ This project uses graphs & tableviews to present relations between objects. Data
 6. Change connectionstring in [repository.js](https://github.com/DoctorBoo/Calc/blob/master/routes/repository.js) with yours.
 
 ##Examples
-1. [A directed graph with 10 nodes](http://haxe.azurewebsites.net/graph?dependencies&show&pagesize=10)
+1. [A directed graph with 10 nodes](http://haxe.azurewebsites.net/graph?dependencies&show&pagesize=10)  
 	> Click a node to invoke a menu.  
     Change the query-string's pagesize value to increase the amount of nodes.
 2. [Dependencies of AdventureWorks 2012](http://haxe.azurewebsites.net/graph/query?dependencies&pagesize=100&tablify)  
