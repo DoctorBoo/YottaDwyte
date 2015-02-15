@@ -8,7 +8,7 @@ This project uses graphs & tableviews to present relations between objects. Data
 3. [Nodesjs](http://nodejs.org/)
 4. [Express](http://expressjs.com/)
 5. [Sigmajs](https://github.com/jacomyal/sigma.js/wiki)
-6. Change connectionstring in [repository.js](https://github.com/DoctorBoo/Calc/blob/master/routes/repository.js) with yours.
+6. Change connectionstring in [repository.js](https://github.com/DoctorBoo/YottaDwyte/blob/master/routes/repository.js) with yours.
 
 ##Examples
 1. [A directed graph with 10 nodes](http://haxe.azurewebsites.net/graph?dependencies&show&pagesize=10)  
