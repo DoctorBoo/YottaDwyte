@@ -4,7 +4,8 @@ var express = require('express');
 var sql = require('node-sqlserver-unofficial');
 var connStr = "Driver={SQL Server Native Client 11.0};" +
         //For Azure:
-        "Server=tcp:jf0s2hahaz.database.windows.net,1433;Database=Adventureworks2012;UID=dsm@jf0s2hahaz;PWD={};Encrypt={yes};Connection Timeout=30;";
+				//"Server=tcp:jf0s2hahaz.database.windows.net,1433;Database=Adventureworks2012;UID=dsm@jf0s2hahaz;PWD={};Encrypt={yes};Connection Timeout=30;";
+        "Server={DEV-DT2-VDB01};UID={OMNIT\dwight};Database={DT2dot0_DEV};Trusted_Connection={Yes}";
         //On premise: "Server={...};UID={...};Database={...};Trusted_Connection={Yes}";
 var router = express.Router();
 
