@@ -5,7 +5,7 @@ This project uses graphs & tableviews to present relations between objects. Data
 ### Requirements
 1. [Microsoft Azure ](http://www.microsoft.com/bizspark/azure/getstarted.aspx)
 2. [AdventureWorks2012 on-premises](http://msftdbprodsamples.codeplex.com/releases/view/93587) / [AdventureWorks2012 for Azure](http://msftdbprodsamples.codeplex.com/releases/view/37304) 
-3. [Nodesjs](http://nodejs.org/)
+3. [Nodejs](http://nodejs.org/)
 4. [Express](http://expressjs.com/)
 5. [Sigmajs](https://github.com/jacomyal/sigma.js/wiki) : [http://sigmajs.org](http://sigmajs.org/) 
 
