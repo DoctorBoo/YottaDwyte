@@ -87,30 +87,34 @@ var NodeFactory = (function NodeFactory() {
     var nodeFound, sourceFound, targetFound;
     for (var i = 0; i < rows.length; i++) {
       var row = rows[i];
+      var parent = row[self.indexOfParent];
+      var child = row[self.indexOfChild];
       nodeFound = null;
       nodeFound = graph.nodes.some(function (item) {
         return item.label.toLowerCase() === row[self.indexOfIdentity].toLowerCase();
       });
       if (!nodeFound) {
         addNode(row[self.indexOfIdentity], row[self.indexOfIdentity], i, row[self.indexOfschemaParent]);
-      };
+      }      ;
       sourceFound = graph.nodes.some(function (item) {
-        return item.label.toLowerCase() === row[self.indexOfParent].toLowerCase();
+        return item.label.toLowerCase() === parent.toLowerCase();
       });
       if (!sourceFound) {
-        addNode(row[self.indexOfParent], row[self.indexOfParent], i, row[self.indexOfschemaParent]);
-      };
+        addNode(parent, parent, i, row[self.indexOfschemaParent]);
+      }      ;
       targetFound = graph.nodes.some(function (item) {
-        return item.label.toLowerCase() === row[self.indexOfChild].toLowerCase();
+        return item.label.toLowerCase() === child.toLowerCase();
       });
       if (!targetFound) {
-        addNode(row[self.indexOfChild], row[self.indexOfChild], i, row[self.indexOfschemaChild]);
-      };
+        addNode(child, child, i, row[self.indexOfschemaChild]);
+      }      ;
       
+      var source = self.indexOfschemaParent > -1 ? row[self.indexOfschemaParent] + '.' + parent : parent;
+      var target = self.indexOfschemaChild > -1 ? row[self.indexOfschemaChild] + '.' + child : child;
       graph.edges.push({
         id: 'e' + i,
-        target: self.indexOfschemaChild > -1 ? row[self.indexOfschemaChild] + '.' + row[self.indexOfChild] : row[self.indexOfChild],
-        source: self.indexOfschemaParent > -1 ? row[self.indexOfschemaParent] + '.' + row[self.indexOfParent]: row[self.indexOfParent],
+        target: target,
+        source: source,
         size: Math.random(),                
         color: '#ccc',
         hover_color: '#ff87',
