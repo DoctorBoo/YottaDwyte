@@ -95,19 +95,19 @@ var NodeFactory = (function NodeFactory() {
       });
       if (!nodeFound) {
         addNode(row[self.indexOfIdentity], row[self.indexOfIdentity], i, row[self.indexOfschemaParent]);
-      }      ;
+      };
       sourceFound = graph.nodes.some(function (item) {
         return item.label.toLowerCase() === parent.toLowerCase();
       });
       if (!sourceFound) {
         addNode(parent, parent, i, row[self.indexOfschemaParent]);
-      }      ;
+      };
       targetFound = graph.nodes.some(function (item) {
         return item.label.toLowerCase() === child.toLowerCase();
       });
       if (!targetFound) {
         addNode(child, child, i, row[self.indexOfschemaChild]);
-      }      ;
+      };
       
       var source = self.indexOfschemaParent > -1 ? row[self.indexOfschemaParent] + '.' + parent : parent;
       var target = self.indexOfschemaChild > -1 ? row[self.indexOfschemaChild] + '.' + child : child;
