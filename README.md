@@ -7,7 +7,7 @@ This project uses graphs & tableviews to present relations between objects. Data
 2. [AdventureWorks2012 on-premises](http://msftdbprodsamples.codeplex.com/releases/view/93587) / [AdventureWorks2012 for Azure](http://msftdbprodsamples.codeplex.com/releases/view/37304) 
 3. [Nodesjs](http://nodejs.org/)
 4. [Express](http://expressjs.com/)
-5. [Sigmajs](https://github.com/jacomyal/sigma.js/wiki)  
+5. [Sigmajs](https://github.com/jacomyal/sigma.js/wiki) : [http://sigmajs.org](http://sigmajs.org/) 
 
 ### Gettting started
 1. Change connectionstring in [repository.js](https://github.com/DoctorBoo/YottaDwyte/blob/master/routes/repository.js) with yours.
