@@ -158,6 +158,7 @@
     <Compile Include="bin\www" />
     <None Include="Haxe - Web Deploy.pubxml" />
     <None Include="Haxe - FTP.pubxml" />
+    <Content Include="bin\start" />
     <Content Include="package.json" />
     <Content Include="public\bootstrap-3.3.2-dist\css\bootstrap-theme.css" />
     <Content Include="public\bootstrap-3.3.2-dist\css\bootstrap-theme.css.map" />
