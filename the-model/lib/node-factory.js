@@ -88,29 +88,31 @@ var NodeFactory = (function NodeFactory() {
     for (var i = 0; i < rows.length; i++) {
       var row = rows[i];
       var parent = row[self.indexOfParent];
+      var schemaParent = row[self.indexOfschemaParent];
+      var schemaChild = row[self.indexOfschemaChild];
       var child = row[self.indexOfChild];
-      nodeFound = null;
+      
       nodeFound = graph.nodes.some(function (item) {
         return item.label.toLowerCase() === row[self.indexOfIdentity].toLowerCase();
       });
       if (!nodeFound) {
-        addNode(row[self.indexOfIdentity], row[self.indexOfIdentity], i, row[self.indexOfschemaParent]);
-      };
+        addNode(row[self.indexOfIdentity], row[self.indexOfIdentity], i, schemaParent);
+      }      ;
       sourceFound = graph.nodes.some(function (item) {
         return item.label.toLowerCase() === parent.toLowerCase();
       });
       if (!sourceFound) {
-        addNode(parent, parent, i, row[self.indexOfschemaParent]);
-      };
+        addNode(parent, parent, i, schemaParent);
+      }      ;
       targetFound = graph.nodes.some(function (item) {
         return item.label.toLowerCase() === child.toLowerCase();
       });
       if (!targetFound) {
-        addNode(child, child, i, row[self.indexOfschemaChild]);
-      };
+        addNode(child, child, i, schemaChild);
+      }      ;
       
-      var source = self.indexOfschemaParent > -1 ? row[self.indexOfschemaParent] + '.' + parent : parent;
-      var target = self.indexOfschemaChild > -1 ? row[self.indexOfschemaChild] + '.' + child : child;
+      var source = self.indexOfschemaParent > -1 ? schemaParent + '.' + parent : parent;
+      var target = self.indexOfschemaChild > -1 ? schemaChild + '.' + child : child;
       graph.edges.push({
         id: 'e' + i,
         target: target,
