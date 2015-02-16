@@ -20,7 +20,7 @@ var NodeFactory = (function NodeFactory() {
       throw new Error('identityName, meta and rows expected.');
     if (!Array.isArray(meta) || !Array.isArray(rows))
       throw new Error("meta or rows should be array's.");
-    this.graph = this.CreateJasonfiedGexf(meta, rows, parent, child);
+    self.graph = self.CreateJasonfiedGexf(meta, rows, parent, child);
   }
   
   /*
