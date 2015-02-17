@@ -1,11 +1,11 @@
 # YottaDwyte
-This project uses graphs & tableviews to present relations between objects. Data visualizations can be realized with the help of sigmajs, nodejs, Azure, Express, Jade. These visualizations are the result of a study that can explain classification, clustering and prediction without sharing the actual data features and relations. 
+This project uses graphs & tableviews to present relations between objects. Data visualizations can be realized with the help of sigmajs, node.js, Azure, Express, Jade. These visualizations are the result of a study that can explain classification, clustering and prediction without sharing the actual data features and relations. 
 >Azure fulfills the role as a mocking environment for integration-testing purposes. Rerouting the calculations through a restfull service leverages the loosely coupled design. [Jade is just awesome to me](https://github.com/DoctorBoo/YottaDwyte/blob/master/views/directed.jade). But I will stick with CSS for now. Sigmajs provides the best features when you need open source, performance, [knowledge from its community](https://consortium.gephi.org/members.html) or [advanced study visualizations](https://gephi.github.io/).
 
 ### Requirements
 1. [Microsoft Azure ](http://www.microsoft.com/bizspark/azure/getstarted.aspx)
 2. [AdventureWorks2012 on-premises](http://msftdbprodsamples.codeplex.com/releases/view/93587) / [AdventureWorks2012 for Azure](http://msftdbprodsamples.codeplex.com/releases/view/37304) 
-3. [Node.js](http://nodejs.org/)
+3. [Nodejs](http://nodejs.org/)
 4. [Express](http://expressjs.com/)
 5. [Sigmajs](https://github.com/jacomyal/sigma.js/wiki) : [http://sigmajs.org](http://sigmajs.org/) 
 
