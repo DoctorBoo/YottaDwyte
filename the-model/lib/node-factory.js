@@ -1,4 +1,5 @@
-﻿
+﻿'use strict';
+
 var NodeFactory = (function NodeFactory() {
   var self;
   
@@ -20,6 +21,10 @@ var NodeFactory = (function NodeFactory() {
       throw new Error('identityName, meta and rows expected.');
     if (!Array.isArray(meta) || !Array.isArray(rows))
       throw new Error("meta or rows should be array's.");
+    self.graph = {
+      nodes: [],
+      edges: []
+    };
     self.graph = self.CreateJasonfiedGexf(meta, rows, parent, child);
   }
   
@@ -68,19 +73,23 @@ var NodeFactory = (function NodeFactory() {
       self.indexOfChild = ix;
       return item.name.toLowerCase() === pChild.toLowerCase();
     });
+    
     self.child = childDetails;
     var addNode = function (pid, plabel, ix, schema) {
       graph.nodes.push({
         id: schema ? schema + '.' + pid : pid,
         label: plabel,
-        x: Math.random(),// Math.cos(Math.PI * 2 * ix / rows.length),
-        y: Math.random(),//Math.sin(Math.PI * 2 * ix / rows.length),
-        size: 1, //Math.random(),
+        x: Math.random(), // Math.cos(Math.PI * 2 * ix / rows.length),
+        y: Math.random(), //Math.sin(Math.PI * 2 * ix / rows.length),
+        size: 100, //Math.random(),
         color: '#' + (Math.floor(Math.random() * 16777215).toString(16) + '000000'),
-        grid_x: ix % 10,
-        grid_y: Math.floor(ix / 10),
+        //grid_x: ix % 10,
+        //grid_y: Math.floor(ix / 10),
         grid_size: 1,
-        grid_color: '#ccc'
+        grid_color: '#ccc',
+        weight: 0,
+        order: 0,
+        traversed: false
       });
     };
     
@@ -131,6 +140,37 @@ var NodeFactory = (function NodeFactory() {
   }
   NodeFactory.prototype.get_indexOfIdentity = function () {
     return this.indexOfIdentity;
+  }
+  NodeFactory.prototype.EvalFn = function (node, index, array) {
+    var parent = this;
+    
+    node.weight = parent.weight + 1;
+    node.order = index + 1;
+  }
+  
+  NodeFactory.prototype.get_children = function (node) {
+    var parent = this;
+    
+    return self.graph.edges.some(function (edge) {
+      return edge.source === parent && edge.target === node && !node.traversed;
+    });
+  }
+  
+  NodeFactory.prototype.EvalNodes = function (evalFn, node) {
+    node.traversed = true;
+    var children = self.graph.nodes.filter(self.get_children, node);
+    
+    if (children && children.length > 0) {
+      //eval node for weight, order, label.
+      children.forEach(evalFn, node);
+      
+      //pre-order traversal
+      children.forEach(function (child) {
+        self.EvalNodes(self.EvalFn, child);
+      });
+    }
+    else
+      return null;
   }
   return NodeFactory;
 })();
