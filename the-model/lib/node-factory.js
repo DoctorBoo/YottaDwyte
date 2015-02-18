@@ -26,6 +26,10 @@ var NodeFactory = (function NodeFactory() {
       edges: []
     };
     self.graph = self.CreateJasonfiedGexf(meta, rows, parent, child);
+    
+    self.graph.nodes.forEach(function (node) {
+      self.EvalNodes(self.EvalFn, node);
+    });
   }
   
   /*
@@ -89,7 +93,8 @@ var NodeFactory = (function NodeFactory() {
         grid_color: '#ccc',
         weight: 0,
         order: 0,
-        traversed: false
+        traversed: false,
+        childCount: 0
       });
     };
     
@@ -142,24 +147,33 @@ var NodeFactory = (function NodeFactory() {
     return this.indexOfIdentity;
   }
   NodeFactory.prototype.EvalFn = function (node, index, array) {
+    
     var parent = this;
     
-    node.weight = parent.weight + 1;
-    node.order = index + 1;
+    node.weight = node.id === parent.id ?  parent.weight + Math.random() : parent.weight + 1 + Math.random();
+    node.order = node.id === parent.id ? parent.order + Math.random() : index + 1 + parent.weight + Math.random() * 0.0001;
+    
+    node.x = node.order;
+    node.y = node.weight;
+    
+    console.log('EvalFn:', node);
   }
   
   NodeFactory.prototype.get_children = function (node) {
     var parent = this;
     
     return self.graph.edges.some(function (edge) {
-      return edge.source === parent && edge.target === node && !node.traversed;
+      return edge.source === parent.id && edge.target === node.id && !node.traversed;
     });
   }
   
   NodeFactory.prototype.EvalNodes = function (evalFn, node) {
+    //console.log('EvalNodes:', node);
     node.traversed = true;
     var children = self.graph.nodes.filter(self.get_children, node);
+    node.childCount = children.length;
     
+    evalFn.call(node, node);
     if (children && children.length > 0) {
       //eval node for weight, order, label.
       children.forEach(evalFn, node);
