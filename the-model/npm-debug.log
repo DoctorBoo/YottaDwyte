@@ -1,69 +1,64 @@
 0 info it worked if it ends with ok
 1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\\\node.exe',
 1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'publish' ]
+1 verbose cli   'install',
+1 verbose cli   '/g' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.35
 4 verbose node symlink C:\Program Files (x86)\nodejs\\node.exe
-5 verbose publish [ '.' ]
-6 verbose cache add [ '.', null ]
-7 verbose cache add name=undefined spec="." args=[".",null]
-8 verbose parsed url { protocol: null,
-8 verbose parsed url   slashes: null,
-8 verbose parsed url   auth: null,
-8 verbose parsed url   host: null,
-8 verbose parsed url   port: null,
-8 verbose parsed url   hostname: null,
-8 verbose parsed url   hash: null,
-8 verbose parsed url   search: null,
-8 verbose parsed url   query: null,
-8 verbose parsed url   pathname: '.',
-8 verbose parsed url   path: '.',
-8 verbose parsed url   href: '.' }
-9 silly lockFile 3a52ce78- .
-10 verbose lock . C:\Users\BMW\AppData\Roaming\npm-cache\3a52ce78-.lock
-11 verbose tar pack [ 'C:\\Users\\BMW\\AppData\\Roaming\\npm-cache\\the-model\\0.0.14\\package.tgz',
-11 verbose tar pack   '.' ]
-12 verbose tarball C:\Users\BMW\AppData\Roaming\npm-cache\the-model\0.0.14\package.tgz
-13 verbose folder .
-14 info prepublish the-model@0.0.14
-15 silly lockFile 1f1177db-tar tar://.
-16 verbose lock tar://. C:\Users\BMW\AppData\Roaming\npm-cache\1f1177db-tar.lock
-17 silly lockFile 08920eae-che-the-model-0-0-14-package-tgz tar://C:\Users\BMW\AppData\Roaming\npm-cache\the-model\0.0.14\package.tgz
-18 verbose lock tar://C:\Users\BMW\AppData\Roaming\npm-cache\the-model\0.0.14\package.tgz C:\Users\BMW\AppData\Roaming\npm-cache\08920eae-che-the-model-0-0-14-package-tgz.lock
-19 error tar pack Error reading .
-20 silly lockFile 1f1177db-tar tar://.
-21 silly lockFile 1f1177db-tar tar://.
-22 silly lockFile 08920eae-che-the-model-0-0-14-package-tgz tar://C:\Users\BMW\AppData\Roaming\npm-cache\the-model\0.0.14\package.tgz
-23 silly lockFile 08920eae-che-the-model-0-0-14-package-tgz tar://C:\Users\BMW\AppData\Roaming\npm-cache\the-model\0.0.14\package.tgz
-24 error addLocalDirectory Could not pack "." to "C:\\Users\\BMW\\AppData\\Roaming\\npm-cache\\the-model\\0.0.14\\package.tgz"
-25 silly lockFile 3a52ce78- .
-26 silly lockFile 3a52ce78- .
-27 error addLocal Could not install .
-28 error Error: Didn't get expected byte count
-28 error expect: 25399296
-28 error actual: 25710592
-28 error     at decorate (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\fstream\lib\abstract.js:67:36)
-28 error     at FileReader.Abstract.error (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\fstream\lib\abstract.js:61:12)
-28 error     at ReadStream.<anonymous> (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\fstream\lib\file-reader.js:66:10)
-28 error     at ReadStream.emit (events.js:117:20)
-28 error     at _stream_readable.js:944:16
-28 error     at process._tickCallback (node.js:442:13)
-29 error If you need help, you may report this *entire* log,
-29 error including the npm and node versions, at:
-29 error     <http://github.com/npm/npm/issues>
-30 error System Windows_NT 6.1.7601
-31 error command "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "publish"
-32 error cwd C:\Users\BMW\Documents\GitHub\YottaDwyte\the-model
-33 error node -v v0.10.35
-34 error npm -v 1.4.28
-35 error path C:\Users\BMW\Documents\GitHub\YottaDwyte/package\.ntvs_analysis.dat.tmp
-36 error fstream_path C:\Users\BMW\Documents\GitHub\YottaDwyte/package\.ntvs_analysis.dat.tmp
-37 error fstream_unc_path C:\Users\BMW\Documents\GitHub\YottaDwyte\the-model\.ntvs_analysis.dat.tmp
-38 error fstream_type File
-39 error fstream_class FileReader
-40 error fstream_stack ReadStream.<anonymous> (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\fstream\lib\file-reader.js:66:10)
-40 error fstream_stack ReadStream.emit (events.js:117:20)
-40 error fstream_stack _stream_readable.js:944:16
-40 error fstream_stack process._tickCallback (node.js:442:13)
-41 verbose exit [ 1, true ]
+5 warn package.json the-model@0.0.15 No repository field.
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ '/g', null ]
+8 verbose cache add name=undefined spec="/g" args=["/g",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: '/g',
+9 verbose parsed url   path: '/g',
+9 verbose parsed url   href: '/g' }
+10 silly lockFile 896568da-g /g
+11 verbose lock /g C:\Users\BMW\AppData\Roaming\npm-cache\896568da-g.lock
+12 info maybeGithub Attempting /g from git://github.com//g
+13 silly lockFile 9c3f4b28-git-github-com-g git://github.com//g
+14 verbose lock git://github.com//g C:\Users\BMW\AppData\Roaming\npm-cache\9c3f4b28-git-github-com-g.lock
+15 verbose addRemoteGit [ 'git://github.com//g', 'master' ]
+16 verbose git clone git://github.com//g Cloning into bare repository 'C:\Users\BMW\AppData\Roaming\npm-cache\_git-remotes\git-github-com-g-9c3f4b28'...
+16 verbose git clone git://github.com//g fatal: remote error:
+16 verbose git clone git://github.com//g   Repository not found.
+17 silly lockFile 9c3f4b28-git-github-com-g git://github.com//g
+18 silly lockFile 9c3f4b28-git-github-com-g git://github.com//g
+19 info maybeGithub Attempting /g from git+ssh://git@github.com:/g
+20 silly lockFile d8ff98e4-ssh-git-github-com-g ssh://git@github.com:/g
+21 verbose lock ssh://git@github.com:/g C:\Users\BMW\AppData\Roaming\npm-cache\d8ff98e4-ssh-git-github-com-g.lock
+22 verbose addRemoteGit [ 'ssh://git@github.com:/g', 'master' ]
+23 error git clone ssh://git@github.com:/g Cloning into bare repository 'C:\Users\BMW\AppData\Roaming\npm-cache\_git-remotes\ssh-git-github-com-g-d8ff98e4'...
+23 error git clone ssh://git@github.com:/g Warning: Permanently added 'github.com,192.30.252.131' (RSA) to the list of known hosts.
+23 error git clone ssh://git@github.com:/g Permission denied (publickey).
+23 error git clone ssh://git@github.com:/g fatal: Could not read from remote repository.
+23 error git clone ssh://git@github.com:/g
+23 error git clone ssh://git@github.com:/g Please make sure you have the correct access rights
+23 error git clone ssh://git@github.com:/g and the repository exists.
+24 silly lockFile d8ff98e4-ssh-git-github-com-g ssh://git@github.com:/g
+25 silly lockFile d8ff98e4-ssh-git-github-com-g ssh://git@github.com:/g
+26 silly lockFile 896568da-g /g
+27 silly lockFile 896568da-g /g
+28 error addLocal Could not install /g
+29 error Error: ENOENT, stat 'C:\g'
+30 error If you need help, you may report this *entire* log,
+30 error including the npm and node versions, at:
+30 error     <http://github.com/npm/npm/issues>
+31 error System Windows_NT 6.1.7601
+32 error command "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "/g"
+33 error cwd C:\Users\BMW\Documents\GitHub\YottaDwyte\the-model
+34 error node -v v0.10.35
+35 error npm -v 1.4.28
+36 error path C:\g
+37 error code ENOENT
+38 error errno 34
+39 verbose exit [ 34, true ]
