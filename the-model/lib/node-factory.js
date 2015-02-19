@@ -81,6 +81,7 @@ var NodeFactory = (function NodeFactory() {
     self.child = childDetails;
     var addNode = function (pid, plabel, ix, schema) {
       graph.nodes.push({
+        index: ix,
         id: schema ? schema + '.' + pid : pid,
         label: plabel,
         x: Math.random(), // Math.cos(Math.PI * 2 * ix / rows.length),
@@ -140,7 +141,6 @@ var NodeFactory = (function NodeFactory() {
                  * */
       });
     }
-    
     return graph;
   }
   NodeFactory.prototype.get_indexOfIdentity = function () {
@@ -153,7 +153,7 @@ var NodeFactory = (function NodeFactory() {
     node.weight = node.id === parent.id ?  parent.weight + Math.random() : parent.weight + 1 + Math.random();
     node.order = node.id === parent.id ? parent.order + Math.random() : index + 1 + parent.weight + Math.random() * 0.0001;
     
-    node.x = node.order;
+    node.x = node.index;
     node.y = node.weight;
     
     console.log('EvalFn:', node);

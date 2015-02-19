@@ -12,17 +12,17 @@ html
     - var rows  = values
     //
     table.table.table-hover.table-bordered
-        thead
-            tr
-                each header in headers
-                    th  
-                        span= header.name
-        tbody
-            if rows.length
-                each row in rows
-                    tr
-                        each col in row
-                            td
-                                span= col
-             else
-                h3='No values found.'
+      thead
+        tr
+          each header in headers
+            th  
+              span= header.name
+      tbody
+      if rows.length
+        each row in rows
+          tr
+            each col in row
+              td
+                span= col
+      else
+        h3='No values found.'
