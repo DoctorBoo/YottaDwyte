@@ -93,8 +93,7 @@ common.extend(System, 'Collections');
 var Validator = (function () {
     
     function Validator() {
-        this.assert = function (condition, message) {
-            debugger;
+        this.assert = function (condition, message) {            
             if (!condition) {
                 message = message || "Assertion failed";
                 if (typeof Error !== "undefined") {
