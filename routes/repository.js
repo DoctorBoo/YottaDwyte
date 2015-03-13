@@ -4,10 +4,13 @@ var express = require('express');
 var sql = require('node-sqlserver-unofficial');
 var connStr = "Driver={SQL Server Native Client 11.0};" +
         //For Azure:
-				"Server=tcp:jf0s2hahaz.database.windows.net,1433;Database=Adventureworks2012;UID=;PWD={};Encrypt={yes};Connection Timeout=30;";
+        "Server=tcp:jf0s2hahaz.database.windows.net,1433;Database=Adventureworks2012;UID=@jf0s2hahaz;PWD={};Encrypt={yes};Connection Timeout=30;";
         //"Server={DEV-DT2-VDB01};UID={OMNIT\dwight};Database={DT2dot0_DEV};Trusted_Connection={Yes}";
         //On premise: "Server={...};UID={...};Database={...};Trusted_Connection={Yes}";
 var router = express.Router();
+
+var MongoClient = require('mongodb').MongoClient
+var format = require('util').format;
 
 router.CreateGraph = function(request, meta, rows) {
   var query = request.query;
@@ -18,6 +21,55 @@ router.CreateGraph = function(request, meta, rows) {
   return factory;
 };
 
+var importData = function (request, response) {
+  var req = request;
+  var params = request.url;
+  var table = params.split('/').length > 1 ? params.split('/')[2] : null;
+  sql.open(connStr, function (error, conn) {
+    if (!error) {
+      
+      if (table) {
+        var qryString = "SELECT *  FROM " + table;
+        
+        conn.queryRaw(qryString , function (err, results) {
+          if (err) {
+            handleError('Syntax/Query problems', err);
+          }
+          
+          try {
+            var pagesize = results.rows.length;
+            console.log(results.meta);
+            
+            this.gRenderer.MongoClient.connect('mongodb://mongo:mongo@ds045097.mongolab.com:45097/YottaDwyteLab', function (err, db) {
+              if (err) throw err;
+              
+              var collection = db.collection(table);
+              
+              results.rows.forEach(function (row) {
+                results.meta.forEach(function (column, i) {
+                  var value = row[i];
+                  var tuple = {};
+                  tuple[column.name] = value;
+                  collection.insert(tuple, function (err, docs) {});
+                });
+              });
+
+              db.close();
+            })
+          } catch (e) {
+            handleError('Syntax/Query problems', e);
+          }
+        });
+      } else {
+        handleError('Syntax error', new Error('tablename expected'));
+      }
+    } else {
+      handleError('Connection problems', error);
+    }
+  });
+  
+  response.end();
+}
 var graphJson = function (request, response, meta, rows) {
   var factory = router.CreateGraph(request, meta, rows);
   response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -61,19 +113,47 @@ var tableRenderer = function (request, response, meta, rows, name) {
   }
 }
 
-routes = ['/query' , '/graph', '/graph/json','/'];
+routes = ['/query' , '/graph', '/graph/json', '/'];
+routesPost = ['/importdata/*', '/importdata']
 renderer = (function () {
-  function renderer() {
-    this['/query'] = tableRenderer;
-    this['/graph'] = graphRenderer;
-    this['/graph/json'] = graphJson;
-    this['/'] = graphRenderer;
+function renderer() {
+this['/query'] = tableRenderer;
+this['/graph'] = graphRenderer;
+this['/graph/json'] = graphJson;
+this['/'] = graphRenderer;
+this['/importdata/*'] = importData;
+    this['/importdata'] = importData;
+    this.MongoClient = MongoClient;
+    this.MongoTest = function () {
+      this.MongoClient.connect('mongodb://mongo:mongo@ds045097.mongolab.com:45097/YottaDwyteLab', function (err, db) {
+        if (err) throw err;
+      
+        var collection = db.collection('test_insert2');
+        collection.insert({ a: 2 }, function (err, docs) {
+        
+          collection.count(function (err, count) {
+            console.log(format("count = %s", count));
+          });
+        
+          // Locate all the entries using find 
+          collection.find().toArray(function (err, results) {
+            console.dir(results);
+            // Let's close the db 
+            db.close();
+          });
+        });
+      })
+    }
   }
+
   return renderer;
 })();
 gRenderer = new renderer();
 
-var requestHandler = function (request, response) {
+var requestPostHandler = function (request, response) {
+  this.gRenderer[request.route.path](request, response);
+}
+var requestGetHandler = function (request, response) {
   var query = request.query;
   
   var table = query && query.table && query.table.isArray && query.table.isArray() ? 
@@ -123,7 +203,10 @@ var requestHandler = function (request, response) {
 }
 
 routes.forEach(function (route) {
-  router.get(route, requestHandler);
+  router.get(route, requestGetHandler);
+});
+routesPost.forEach(function (route) {
+  router.post(route, requestPostHandler);
 });
 
 function getDependencies() {

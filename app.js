@@ -40,6 +40,9 @@ app.use('/users', users);
 app.use('/tree/list', repository);
 app.use('/tree', repository);
 app.use('/graph', repository);
+app.use('/graph/nodes/*', repository);
+app.post('/importdata', repository);
+app.post('/importdata/*', repository);
 
 // catch 404 and forward to error handler 
 app.use(function (req, res, next) {
