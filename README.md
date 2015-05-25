@@ -14,15 +14,15 @@ This project uses graphs & tableviews to present relations between objects. Data
 2. Change directory in commandline to bin and enter : Node start 
 
 ##Examples
-1. [A directed graph with 10 nodes](http://haxe2.azurewebsites.net/graph?dependencies&show&pagesize=10)  
+1. [A directed graph with 10 nodes](http://haxe.azurewebsites.net/graph?dependencies&show&pagesize=10)  
 	>Click a node to invoke a menu.  
     Change the query-string's pagesize value to increase the amount of nodes.
-2. [Dependencies of AdventureWorks 2012](http://haxe2.azurewebsites.net/graph/query?dependencies&pagesize=100&tablify)  
-3. [Jsonfied database object: Production.Product](http://haxe2.azurewebsites.net/graph/query?table=production.product&pagesize=10)
-4. [Tablified json database object: Production.Product](http://haxe2.azurewebsites.net/graph/query?table=production.product&pagesize=10&tablify)
-5. [Changing the parent-child mapping with JSON](http://haxe2.azurewebsites.net/graph?dependencies&pagesize=10&parent={%22schema%22:%22Schema_FK_table%22,%20%22object%22:%20%22FK_column%22}&child={%22schema%22:%22Schema_PK_table%22,%20%22object%22:%20%22PK_column%22}&show)
+2. [Dependencies of AdventureWorks 2012](http://haxe.azurewebsites.net/graph/query?dependencies&pagesize=100&tablify)  
+3. [Jsonfied database object: Production.Product](http://haxe.azurewebsites.net/graph/query?table=production.product&pagesize=10)
+4. [Tablified json database object: Production.Product](http://haxe.azurewebsites.net/graph/query?table=production.product&pagesize=10&tablify)
+5. [Changing the parent-child mapping with JSON](http://haxe.azurewebsites.net/graph?dependencies&pagesize=10&parent={%22schema%22:%22Schema_FK_table%22,%20%22object%22:%20%22FK_column%22}&child={%22schema%22:%22Schema_PK_table%22,%20%22object%22:%20%22PK_column%22}&show)
 	> If no parent and child relation is given defaults may be applied :
-    [parent={"schema":"Schema_FK_table", "object": "FK_table"}&child={"schema":"Schema_PK_table", "object": "PK_table"}](http://haxe2.azurewebsites.net/graph?dependencies&pagesize=10&parent={%22schema%22:%22Schema_FK_table%22,%20%22object%22:%20%22FK_table%22}&child={%22schema%22:%22Schema_PK_table%22,%20%22object%22:%20%22PK_table%22}&show)  
+    [parent={"schema":"Schema_FK_table", "object": "FK_table"}&child={"schema":"Schema_PK_table", "object": "PK_table"}](http://haxe.azurewebsites.net/graph?dependencies&pagesize=10&parent={%22schema%22:%22Schema_FK_table%22,%20%22object%22:%20%22FK_table%22}&child={%22schema%22:%22Schema_PK_table%22,%20%22object%22:%20%22PK_table%22}&show)  
 
 ## Known issues
 1. Coordinates and edges are randomly chosen for the demo.
