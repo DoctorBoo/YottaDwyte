@@ -1,11 +1,21 @@
 ﻿var theModel = require('the-model');
 var nodefactory = theModel.nodefactory;
 var express = require('express');
-var sql = require('node-sqlserver-unofficial');
+var sql = require('mssql');
+var config = {
+    user: '',
+    password: '',
+    server: 'jf0s2hahaz.database.windows.net', // You can use 'localhost\\instance' to connect to named instance 
+    database: 'Adventureworks2012',
+    
+    options: {
+        encrypt: true // Use this if you're on Windows Azure 
+    }
+}
 var connStr = "Driver={SQL Server Native Client 11.0};" +
         //For Azure:
         "Server=tcp:jf0s2hahaz.database.windows.net,1433;Database=Adventureworks2012;UID=@jf0s2hahaz;PWD={};Encrypt={yes};Connection Timeout=30;";
-       
+        
         //On premise: "Server={...};UID={...};Database={...};Trusted_Connection={Yes}";
 var router = express.Router();
 
@@ -159,32 +169,44 @@ var requestGetHandler = function (request, response) {
   var table = query && query.table && query.table.isArray && query.table.isArray() ? 
                 query.table.length > 0 ? query.table[1] : 
                 query.table : query && query.table;
-  
-  sql.open(connStr, function (error, conn) {
-    if (!error) {
+  if(sql.connect)
+    sql.connect(config).then( function (context, conn) {
+    if (context && context.connected === true) {
       
       var dependencies = query.dependencies === '';
       if (table || dependencies) {
         var qryString = "SELECT *  FROM " + table;
         qryString = dependencies ? getDependencies() : qryString;
         console.log(qryString);
-        
-        conn.queryRaw(qryString , function (err, results) {
-          if (err) {
-            handleError('Syntax/Query problems', err);
-          }
+                
+        var sqlRq = new sql.Request();     
           
-          try {
-            var pagesize = query.pagesize || 100;//results.rows.length;
-            results.rows.splice(Number(pagesize), results.rows.length - Number(pagesize));
-            console.log(results.meta);
-            
-            this.gRenderer[request.route.path](request, response, results.meta, results.rows, table);
+        sqlRq.query(qryString).then(function (results) {                   
+                    try {
+                        var pagesize = query.pagesize || 100;//results.rows.length;
+                        var rows = results;    
+                        rows.splice(Number(pagesize), rows.length - Number(pagesize));
+                        console.log(results.columns);
+                            
+                        //METADATA: https://www.npmjs.com/package/mssql#metadata
+                        var meta =[];
+                        for (var propertyName in results.columns) {
+                            var property = results.columns[propertyName];
+                            meta.push({
+                                name: propertyName.toString(),
+                                size: 60,
+                                nullable: property.nullable,
+                                type: 'text',
+                                sqlType: property.type
+                            })
+                        }
+                        
+                        this.gRenderer[request.route.path](request, response, meta, rows, table);
 
-          } catch (e) {
-            handleError('Syntax/Query problems', e);
-          }
-        });
+                    } catch (e) {
+                        handleError('Syntax/Query problems', e);
+                    }
+                });
       } else {
         handleError('Syntax error', new Error('tablename expected'));
       }
@@ -192,7 +214,41 @@ var requestGetHandler = function (request, response) {
       handleError('Connection problems', error);
     }
   });
-  
+    
+    if (sql.open) {
+        sql.open(connStr, function (error, conn) {
+            if (!error) {
+                
+                var dependencies = query.dependencies === '';
+                if (table || dependencies) {
+                    var qryString = "SELECT *  FROM " + table;
+                    qryString = dependencies ? getDependencies() : qryString;
+                    console.log(qryString);
+                    
+                    conn.queryRaw(qryString , function (err, results) {
+                        if (err) {
+                            handleError('Syntax/Query problems', err);
+                        }
+                        
+                        try {
+                            var pagesize = query.pagesize || 100;//results.rows.length;
+                            results.rows.splice(Number(pagesize), results.rows.length - Number(pagesize));
+                            console.log(results.meta);
+                            
+                            this.gRenderer[request.route.path](request, response, results.meta, results.rows, table);
+
+                        } catch (e) {
+                            handleError('Syntax/Query problems', e);
+                        }
+                    });
+                } else {
+                    handleError('Syntax error', new Error('tablename expected'));
+                }
+            } else {
+                handleError('Connection problems', error);
+            }
+        });
+    }
   function handleError(title, error) {
     response.status(500);
     response.render('error', {

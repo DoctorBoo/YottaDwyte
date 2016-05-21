@@ -1,6 +1,6 @@
-﻿var common = require('./Lib/common.js');
-var collection = require('./Lib/collections.js');
-var nodefactory = require('./Lib/node-factory.js');
+﻿var common = require('./lib/common.js');
+var collection = require('./lib/collections.js');
+var nodefactory = require('./lib/node-factory.js');
 
 var Universe = {
     common: common,
