@@ -1,6 +1,8 @@
 ﻿var theModel = require('the-model');
 var nodefactory = theModel.nodefactory;
 var express = require('express');
+var KrakenClient = require('kraken-api');
+
 var sql = require('mssql');
 var config = {
     user: '',
@@ -32,53 +34,101 @@ router.CreateGraph = function(request, meta, rows) {
 };
 
 var importData = function (request, response) {
-  var req = request;
-  var params = request.url;
-  var table = params.split('/').length > 1 ? params.split('/')[2] : null;
-  sql.open(connStr, function (error, conn) {
-    if (!error) {
-      
-      if (table) {
-        var qryString = "SELECT *  FROM " + table;
-        
-        conn.queryRaw(qryString , function (err, results) {
-          if (err) {
-            handleError('Syntax/Query problems', err);
-          }
-          
-          try {
-            var pagesize = results.rows.length;
-            console.log(results.meta);
-            
-            this.gRenderer.MongoClient.connect('mongodb://mongo:mongo@ds045097.mongolab.com:45097/YottaDwyteLab', function (err, db) {
-              if (err) throw err;
-              
-              var collection = db.collection(table);
-              
-              results.rows.forEach(function (row) {
-                results.meta.forEach(function (column, i) {
-                  var value = row[i];
-                  var tuple = {};
-                  tuple[column.name] = value;
-                  collection.insert(tuple, function (err, docs) {});
-                });
-              });
+	var req = request;
+	var params = request.url;
+	var table = params.split('/').length > 1 ? params.split('/')[2] : null;
+	var qryString = "SELECT *  FROM " + table;
+	var query = request.query;	
+	var self = this;
 
-              db.close();
-            })
-          } catch (e) {
-            handleError('Syntax/Query problems', e);
-          }
-        });
-      } else {
-        handleError('Syntax error', new Error('tablename expected'));
-      }
-    } else {
-      handleError('Connection problems', error);
-    }
-  });
+	if (sql.connect) {
+		sql.connect(config).then(function (context, conn) {
+			if (table) {				
+				console.log(qryString);
+				
+				var sqlRq = new sql.Request();
+				
+				sqlRq.query(qryString, function (error, results) {
+					try {
+						self.MongoTest();
+
+						this.gRenderer.MongoClient.connect('mongodb://192.168.178.21:27017/test', function (err, db) {
+							if (err) throw err;
+							
+							var collection = db.collection(table);
+							
+							//results.rows.forEach(function (row) {
+							//	results.meta.forEach(function (column, i) {
+							//		var value = row[i];
+							//		var tuple = {};
+							//		tuple[column.name] = value;
+							//		collection.insert(tuple, function (err, docs) { });
+							//	});
+							//});
+							
+							db.close();
+						})
+						response.end(JSON.stringify({ "query-result": results }));							
+					} catch (e) {
+						handleError('Syntax/Query problems', e);
+					}
+
+				});
+			}
+		});
+	} else {
+		
+		sql.open(connStr, function (error, conn) {
+			if (!error) {
+				
+				if (table) {										
+					conn.queryRaw(qryString , function (err, results) {
+						if (err) {
+							handleError('Syntax/Query problems', err);
+						}
+						
+						try {
+							var pagesize = results.rows.length;
+							console.log(results.meta);
+							
+							this.gRenderer.MongoClient.connect('mongodb://mongo:mongo@ds045097.mongolab.com:45097/YottaDwyteLab', function (err, db) {
+								if (err) throw err;
+								
+								var collection = db.collection(table);
+								
+								results.rows.forEach(function (row) {
+									results.meta.forEach(function (column, i) {
+										var value = row[i];
+										var tuple = {};
+										tuple[column.name] = value;
+										collection.insert(tuple, function (err, docs) { });
+									});
+								});
+								
+								db.close();
+							})
+						} catch (e) {
+							handleError('Syntax/Query problems', e);
+						}
+					});
+				} else {
+					handleError('Syntax error', new Error('tablename expected'));
+				}
+			} else {
+				handleError('Connection problems', error);
+			}
+		});
+		response.end();
+	}
   
-  response.end();
+}
+
+var mongoApi = function (request, response) {
+	var self = this;
+	//self.krakenPolling(300000);
+
+	response.writeHead(200, { 'Content-Type': 'application/json' });
+	response.end(JSON.stringify({ "query-result": { kraken: 'polling kraken...'} }))
 }
 var graphJson = function (request, response, meta, rows) {
   var factory = router.CreateGraph(request, meta, rows);
@@ -124,37 +174,82 @@ var tableRenderer = function (request, response, meta, rows, name) {
 }
 
 routes = ['/query' , '/graph', '/graph/json', '/'];
-routesPost = ['/importdata/*', '/importdata']
+routesPost = ['/importdata/*', '/importdata', '/mongoApi']
 renderer = (function () {
-function renderer() {
-this['/query'] = tableRenderer;
-this['/graph'] = graphRenderer;
-this['/graph/json'] = graphJson;
-this['/'] = graphRenderer;
-this['/importdata/*'] = importData;
-    this['/importdata'] = importData;
-    this.MongoClient = MongoClient;
-    this.MongoTest = function () {
-      this.MongoClient.connect('mongodb://mongo:mongo@ds045097.mongolab.com:45097/YottaDwyteLab', function (err, db) {
-        if (err) throw err;
+	function renderer() {
+		var self = this;
+		self['/query'] = tableRenderer;
+		self['/graph'] = graphRenderer;
+		self['/graph/json'] = graphJson;
+		self['/'] = graphRenderer;
+		self['/importdata/*'] = importData;
+		self['/importdata'] = importData;
+		self.MongoClient = MongoClient;
+		self.KrakenTest = function (fn, pair) {
+			self = this;
+			
+			var kraken = new KrakenClient('mPS9rt9OJ01iG5bzA4wSg+gHhY98niQG/Ad+/qcazJemtnk/pVatzBcU', 
+					'Z8r398RCYX4gGJJC/L3FDoZXVsnQTb0WEG3H4RlIT+YI8FdTdPvp8rGwkBozoVQKivw6VwBMCieBUvjKDpdjog==');
+			
+			kraken.api('Ticker', { "pair": pair }, fn);
+		};
+
+		self.krakenPolling = function (ms) {
+			var self = this;			
+
+			var pair1 = 'XETHZEUR';
+			var pair2 = 'XDAOZEUR'
+			
+			var fn = function (error, data) {
+				if (error) {
+					console.log(error);
+				}
+				else {
+					console.log(data.result);
+					
+					self.MongoClient.connect('mongodb://192.168.178.21:27017/test', function (err, db) {
+						if (err) throw err;
+						
+						
+						var collection = db.collection('kraken');
+						if (data.result[pair1])
+							collection.insert({ name : pair1, pair: data.result[pair1], Creation : new Date() });
+						if (data.result[pair2])
+							collection.insert({ name : pair2, pair: data.result[pair2], Creation : new Date() });
+					});
+				}
+			}
+			
+			setInterval(function () {
+				//XDAOZEUR 
+				self.KrakenTest(fn, pair1);
+				self.KrakenTest(fn, pair2);
+			}, ms);
+		};
+
+		self.MongoTest = function () {
+			self.MongoClient.connect('mongodb://192.168.178.21:27017/test', function (err, db) {
+			if (err) throw err;
       
-        var collection = db.collection('test_insert2');
-        collection.insert({ a: 2 }, function (err, docs) {
+			var collection = db.collection('test_insert2');
+			collection.insert({ a: 2 }, function (err, docs) {        
+					collection.count(function (err, count) {
+					console.log(format("count = %s", count));
+					});
         
-          collection.count(function (err, count) {
-            console.log(format("count = %s", count));
-          });
-        
-          // Locate all the entries using find 
-          collection.find().toArray(function (err, results) {
-            console.dir(results);
-            // Let's close the db 
-            db.close();
-          });
-        });
-      })
-    }
-  }
+					// Locate all the entries using find 
+					collection.find().toArray(function (err, results) {
+						console.dir(results);
+						// Let's close the db 
+						db.close();
+					});
+				});
+			})
+		}
+		self['/mongoApi'] = mongoApi;
+
+		self.krakenPolling(2000);
+	}
 
   return renderer;
 })();

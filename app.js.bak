@@ -1,5 +1,4 @@
 ﻿var express = require('express');
-
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -44,7 +43,6 @@ app.use('/graph', repository);
 app.use('/graph/nodes/*', repository);
 app.post('/importdata', repository);
 app.post('/importdata/*', repository);
-app.post('/mongoApi', repository);
 
 // catch 404 and forward to error handler 
 app.use(function (req, res, next) {
