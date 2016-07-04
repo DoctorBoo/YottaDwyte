@@ -72,7 +72,7 @@
     <Compile Include="public\javascripts\Jit\jit-yc.js" />
     <Compile Include="public\javascripts\Jit\jit.js" />
     <Compile Include="public\javascripts\jquery-1.10.2.min.js" />
-    <None Include="public\javascripts\jquery-1.8.2.intellisense.js" />
+    <Compile Include="public\javascripts\jquery-1.8.2.intellisense.js" />
     <Compile Include="public\javascripts\jquery-1.8.2.js" />
     <Compile Include="public\javascripts\jquery-1.8.2.min.js" />
     <Compile Include="public\javascripts\jquery-ui-1.11.2\external\jquery\jquery.js" />
@@ -82,7 +82,7 @@
     <Compile Include="public\javascripts\jquery-ui-1.8.24.min.js" />
     <Compile Include="public\javascripts\jquery.unobtrusive-ajax.js" />
     <Compile Include="public\javascripts\jquery.unobtrusive-ajax.min.js" />
-    <None Include="public\javascripts\jquery.validate-vsdoc.js" />
+    <Compile Include="public\javascripts\jquery.validate-vsdoc.js" />
     <Compile Include="public\javascripts\jquery.validate.js" />
     <Compile Include="public\javascripts\jquery.validate.min.js" />
     <Compile Include="public\javascripts\jquery.validate.unobtrusive.js" />
@@ -151,7 +151,7 @@
     <Compile Include="public\javascripts\Sigma-v1.0.3\src\utils\sigma.utils.js" />
     <Compile Include="public\javascripts\treeviewfactory.js" />
     <Compile Include="public\javascripts\WebStorage.js" />
-    <None Include="public\javascripts\_references.js" />
+    <Compile Include="public\javascripts\_references.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="routes\repository.js" />
     <Compile Include="routes\users.js" />
