@@ -1,1 +1,2 @@
 C:\Users\BMW\Documents\GitHub\YottaDwyte\bin\Microsoft.NodejsTools.WebRole.dll
+C:\Users\dmodiwirijo\Source\Repos\YottaDwyte\bin\Microsoft.NodejsTools.WebRole.dll

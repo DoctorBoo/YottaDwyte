@@ -52,7 +52,7 @@ var importData = function (request, response) {
                     try {
                         self.MongoTest();
 
-                        this.gRenderer.MongoClient.connect('mongodb://192.168.178.21:27017/test', function (err, db) {
+                        this.gRenderer.MongoClient.connect('mongodb://localhost:27017/test', function (err, db) {
                             if (err) throw err;
 
                             var collection = db.collection(table);
@@ -182,7 +182,7 @@ var raiseException = function () {
 var logException = function (e) {
     console.log(e);
     //save error
-    MongoClient.connect('mongodb://192.168.178.21:27017/test', function (err, db) {
+    MongoClient.connect('mongodb://localhost:27017/test', function (err, db) {
         if (err) throw err;
         var collection = db.collection('log');
         collection.insert({ type: 'exceptionhandler', message: e.message, stack: e.stack });
@@ -224,7 +224,7 @@ renderer = (function () {
                 else {
                     console.log(data.result);
 
-                    self.MongoClient.connect('mongodb://192.168.178.21:27017/test', function (err, db) {
+                    self.MongoClient.connect('mongodb://localhost:27017/test', function (err, db) {
                         if (err) throw err;
 
 
@@ -246,7 +246,7 @@ renderer = (function () {
 
         self.MongoTest = function () {
             try {
-                self.MongoClient.connect('mongodb://192.168.178.21:27017/test', function (err, db) {
+                self.MongoClient.connect('mongodb://localhost:27017/test', function (err, db) {
                     if (err) throw err;
 
                     var collection = db.collection('test_insert2');
