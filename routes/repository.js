@@ -16,7 +16,7 @@ var config = {
 }
 var connStr = "Driver={SQL Server Native Client 11.0};" +
     //For Azure:
-    "Server=tcp:jf0s2hahaz.database.windows.net,1433;Database=Adventureworks2012;UID=@jf0s2hahaz;PWD={};Encrypt={yes};Connection Timeout=30;";
+    "Server=tcp:jf0s2hahaz.database.windows.net,1433;Database=Adventureworks2012;UID=" + config.user +"@jf0s2hahaz;PWD={"+ config.password + "};Encrypt={yes};Connection Timeout=30;";
 
 //On premise: "Server={...};UID={...};Database={...};Trusted_Connection={Yes}";
 var router = express.Router();
@@ -180,13 +180,19 @@ var raiseException = function () {
     throw new exception();
 };
 var logException = function (e) {
-    console.log(e);
-    //save error
-    MongoClient.connect('mongodb://localhost:27017/test', function (err, db) {
-        if (err) throw err;
-        var collection = db.collection('log');
-        collection.insert({ type: 'exceptionhandler', message: e.message, stack: e.stack });
-    });
+    try {
+        console.log(e);
+        //save error
+        MongoClient.connect('mongodb://localhost:27017/test', function (err, db) {
+            if (err) throw err;
+            var collection = db.collection('log');
+            collection.insert({ type: 'exceptionhandler', message: e.message, stack: e.stack, Creation: new Date() });
+            db.close();
+        });
+    } catch (e) {
+        console.log(e);
+    }
+    
 }
 renderer = (function () {
     function renderer() {
@@ -200,9 +206,9 @@ renderer = (function () {
         self.MongoClient = MongoClient;
         self.KrakenApi = function (fn, pair) {
             self = this;
-            try {
-                var kraken = new KrakenClient('',
-                    '');
+            try {                
+                var kraken = new KrakenClient('jGHNq3FJ6Vd12UNNzUrEQVY2leyPeKZO9cExVL/GdrrbSltku3iHmLg2',
+                    'Vxl8/OD8G4VrmKT9N6lbiv20ipMZMdzFohonmzTmv7XWuEwr14Ct9P4nq+UWpEERkH7Y+DzJJSbJjSCRpF4jzg==');
 
                 kraken.api('Ticker', { "pair": pair }, fn);
             } catch (e) {
@@ -219,21 +225,25 @@ renderer = (function () {
 
             var fn = function (error, data) {
                 if (error) {
-                    console.log(error);
+                    logException(error);
                 }
                 else {
                     console.log(data.result);
+                    try {
+                        self.MongoClient.connect('mongodb://localhost:27017/test', function (err, db) {
+                            if (err) logException(err);
 
-                    self.MongoClient.connect('mongodb://localhost:27017/test', function (err, db) {
-                        if (err) throw err;
 
-
-                        var collection = db.collection('kraken');
-                        if (data.result[pair1])
-                            collection.insert({ name: pair1, pair: data.result[pair1], Creation: new Date() });
-                        if (data.result[pair2])
-                            collection.insert({ name: pair2, pair: data.result[pair2], Creation: new Date() });
-                    });
+                            var collection = db.collection('kraken');
+                            if (data.result[pair1])
+                                collection.insert({ name: pair1, pair: data.result[pair1], Creation: new Date() });
+                            if (data.result[pair2])
+                                collection.insert({ name: pair2, pair: data.result[pair2], Creation: new Date() });
+                            db.close();
+                        });
+                    } catch (e) {
+                        logException(e);
+                    }
                 }
             }
 
